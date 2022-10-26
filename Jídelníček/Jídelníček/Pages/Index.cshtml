@@ -1,0 +1,110 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1>Users</h1>
+
+@if (Model.Alert != null)
+{
+        <div class="alert alert-success" role="alert">@Model.Alert</div>
+}
+
+<p>
+    <a asp-page="CreateUser">Create new user</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].UserId)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.FirstNameSort">
+                    @Html.DisplayNameFor(model => model.User[0].LastName)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.LastNameSort">
+                    @Html.DisplayNameFor(model => model.User[0].LastName)
+                </a>
+            </th>
+            <th>Menus</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.User) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                <a asp-page="./Menu" asp-route-id="@item.UserId">Menus</a>
+            </td>
+            <td>
+                <a asp-page="./EditUser" asp-route-id="@item.UserId">Edit</a> |
+                <a asp-page="./DetailsUser" asp-route-id="@item.UserId">Details</a> |
+                <a asp-page="./DeleteUser" asp-route-id="@item.UserId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<h1>Foods</h1>
+
+<p>
+    <a asp-page="CreateFood">Create new food</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].FoodId)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+                    @Html.DisplayNameFor(model => model.Food[0].Name)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.KindSort">
+                    @Html.DisplayNameFor(model => model.Food[0].Kind)
+                </a>
+            </th>
+            <th>Menus</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Food)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FoodId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kind)
+                </td>
+                <td>
+                    <a asp-page="./EditFood" asp-route-id="@item.FoodId">Edit</a> |
+                    <a asp-page="./DetailsFood" asp-route-id="@item.FoodId">Details</a> |
+                    <a asp-page="./DeleteFood" asp-route-id="@item.FoodId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

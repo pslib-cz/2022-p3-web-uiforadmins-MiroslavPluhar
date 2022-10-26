@@ -1,0 +1,55 @@
+﻿@page
+@model Jídelníček.Pages.MenuModel
+@{
+}
+
+<h1>Menus of user</h1>
+
+@if (Model.Alert != null)
+{
+            <div class="alert alert-success" role="alert">@Model.Alert</div>
+}
+
+<p>
+    <a asp-page="./Index">Return to users</a>
+</p>
+<p>
+    <a asp-page="CreateMenu" asp-route-id="@Model.UserId">Create new menu</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Menu[0].MenuId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Menu[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Menu[0].UserId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Menu)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    <a asp-page="./EditMenu" asp-route-id="@item.MenuId">Edit</a> |
+                    <a asp-page="./DetailsMenu" asp-route-id="@item.MenuId">Details</a> |
+                    <a asp-page="./DeleteMenu" asp-route-id="@item.MenuId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

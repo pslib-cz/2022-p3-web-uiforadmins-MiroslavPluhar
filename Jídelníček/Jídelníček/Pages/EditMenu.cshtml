@@ -1,0 +1,50 @@
+﻿@page
+@model Jídelníček.Pages.EditMenuModel
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>Edit</h1>
+
+<h4>Menu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Menu.MenuId" />
+            <div class="form-group">
+                <label asp-for="Menu.Name" class="control-label"></label>
+                <input asp-for="Menu.Name" class="form-control" required/>
+                <span asp-validation-for="Menu.Name" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Menu.UserId" value="@Model.Menu.UserId" />
+            <div class="form-group">
+                <span asp-validation-for="Menu.Foods" class="text-danger"></span>
+                <label class="control-label">Add Food</label>
+                <ul style="list-style-type:none">
+                    @foreach (var food1 in Model.Foods1)
+                    {
+                        if (!(Model.Foods2.FirstOrDefault(f => f.FoodId == food1.FoodId) != null))
+                        {
+                            <li><input type="checkbox" name="FoodIds" value="@food1.FoodId" />@food1.Name</li>
+                        }
+                    }
+                </ul>
+                <span asp-validation-for="Menu.Foods" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Menu" asp-route-id="@Model.Menu.UserId">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

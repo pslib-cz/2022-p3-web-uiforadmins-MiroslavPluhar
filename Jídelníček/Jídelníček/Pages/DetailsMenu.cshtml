@@ -1,0 +1,32 @@
+﻿@page
+@model Jídelníček.Pages.DetailsMenuModel
+@{
+    ViewData["Title"] = "Details";
+}
+<h1>Details</h1>
+
+<div>
+    <h4>Menu</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Menu.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Menu.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Menu.Foods)
+        </dt>
+        <ul style="list-style-type:none">
+            @foreach (var item in Model.Foods)
+            {
+                <li><dd class="col-sm-10">@item.Name</dd></li>
+            }
+        </ul>
+    </dl>
+</div>
+<div>
+    <a asp-page="./EditMenu" asp-route-id="@Model.Menu?.MenuId">Edit</a> |
+    <a asp-page="./Menu" asp-route-id="@Model.UserId">Back to List</a>
+</div>
