@@ -28,6 +28,10 @@
                         {
                             <li><input type="checkbox" name="FoodIds" value="@food1.FoodId" />@food1.Name</li>
                         }
+                        else
+                        {
+                            <li><input type="checkbox" name="FoodIds" value="@food1.FoodId" checked />@food1.Name</li>
+                        }
                     }
                 </ul>
                 <span asp-validation-for="Menu.Foods" class="text-danger"></span>

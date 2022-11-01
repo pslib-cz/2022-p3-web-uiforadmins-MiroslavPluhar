@@ -56,23 +56,47 @@ namespace Jídelníček.Pages
             Foods1 = await _context.Foods.ToListAsync();
             Food = new List<Food>();
 
-            foreach (var foodid in FoodIds)
+            var menu = await _context.Menus.FirstOrDefaultAsync(m => m.MenuId == Menu.MenuId);
+
+            menu.Name = Menu.Name;
+
+            if(menu.Foods == null)
             {
-                foreach (var food in Foods1)
+                menu.Foods = new List<Food>();
+                foreach (var foodid in FoodIds)
                 {
-                    if (food.FoodId == foodid)
+                    foreach (var food in Foods1)
                     {
-                        Food.Add(food);
+                        if (food.FoodId == foodid)
+                        {
+                            menu.Foods.Add(food);
+                        }
+                        else
+                        {
+                            menu.Foods.Remove(food);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var foodid in FoodIds)
+                {
+                    foreach (var food in Foods1)
+                    {
+                        if (food.FoodId == foodid)
+                        {
+                            menu.Foods.Add(food);
+                        }
+                        else
+                        {
+                            menu.Foods.Remove(food);
+                        }
                     }
                 }
             }
 
-            var menu = await _context.Menus.FirstOrDefaultAsync(m => m.MenuId == Menu.MenuId);
-
-            menu.Name = Menu.Name;
-            menu.Foods = Food;
-
-            _context.Menus.Attach(menu);
+            _context.Menus.Attach(menu).State = EntityState.Modified;
 
             try
             {
