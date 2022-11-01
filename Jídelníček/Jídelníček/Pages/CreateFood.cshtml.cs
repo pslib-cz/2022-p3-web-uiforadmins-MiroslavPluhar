@@ -38,7 +38,7 @@ namespace Jídelníček.Pages
 
             Alert = "Položka byla úspěšně přidána!";
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Food");
         }
     }
 }

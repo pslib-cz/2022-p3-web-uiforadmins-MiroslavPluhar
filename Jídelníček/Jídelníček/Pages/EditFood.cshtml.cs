@@ -65,7 +65,7 @@ namespace Jídelníček.Pages
 
             Alert = "Položka byla úspěšně upravena!";
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Food");
         }
 
         private bool FoodExists(int id)

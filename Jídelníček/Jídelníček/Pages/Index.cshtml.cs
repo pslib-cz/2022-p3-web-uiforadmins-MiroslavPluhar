@@ -19,36 +19,27 @@ namespace Jídelníček.Pages
         }
 
         public IList<User> User { get; set; } = default!;
-        public IList<Food> Food { get; set; } = default!;
 
         public string FirstNameSort { get; set; }
         public string LastNameSort { get; set; }
-        public string NameSort { get; set; }
-        public string KindSort { get; set; }
         public string CurrentFilter { get; set; }
-        public string CurrentFilter1 { get; set; }
         public string CurrentSort { get; set; }
 
         [TempData]
         public string Alert { get; set; }
 
-        public async Task OnGetAsync(string sortOrder, string searchString, string searchString1)
+        public async Task OnGetAsync(string sortOrder, string searchString)
         {
             FirstNameSort = String.IsNullOrEmpty(sortOrder) ? "firstname_desc" : "";
             LastNameSort = String.IsNullOrEmpty(sortOrder) ? "lastname_desc" : "";
-            NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            KindSort = String.IsNullOrEmpty(sortOrder) ? "kindname_desc" : "";
 
             CurrentFilter = searchString;
-            CurrentFilter1 = searchString1;
 
-            IQueryable<User> usersIQ = from u in _context.Users
-            select u;
+            IQueryable<User> usersIQ = from u in _context.Users select u;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                usersIQ = usersIQ.Where(s => s.FirstName.Contains(searchString)
-                                       || s.LastName.Contains(searchString));
+                usersIQ = usersIQ.Where(s => s.FirstName.Contains(searchString) || s.LastName.Contains(searchString));
             }
 
             switch (sortOrder)
@@ -65,29 +56,6 @@ namespace Jídelníček.Pages
             }
 
             User = await usersIQ.AsNoTracking().ToListAsync();
-
-            IQueryable<Food> foodsIQ = from f in _context.Foods
-            select f;
-
-            if (!String.IsNullOrEmpty(searchString1))
-            {
-                foodsIQ = foodsIQ.Where(s => s.Name.Contains(searchString1));
-            }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    foodsIQ = foodsIQ.OrderByDescending(f => f.Name);
-                    break;
-                case "kindname_desc":
-                    foodsIQ = foodsIQ.OrderByDescending(f => f.Kind);
-                    break;
-                default:
-                    foodsIQ = foodsIQ.OrderBy(f => f.Name);
-                    break;
-            }
-
-            Food = await foodsIQ.AsNoTracking().ToListAsync();
         }
     }
 }

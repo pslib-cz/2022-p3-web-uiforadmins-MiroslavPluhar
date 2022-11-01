@@ -3,6 +3,7 @@ using Jídelníček.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using NuGet.Packaging.Signing;
 using System.Reflection.Metadata;
 
@@ -26,8 +27,6 @@ namespace Jídelníček.Pages
         public List<Food> Foods1 { get; set; }
 
         public List<Food> Foods2 { get; set; }
-
-        public List<Food> Food { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -54,49 +53,28 @@ namespace Jídelníček.Pages
         public async Task<IActionResult> OnPostAsync(int[] FoodIds)
         {
             Foods1 = await _context.Foods.ToListAsync();
-            Food = new List<Food>();
 
             var menu = await _context.Menus.FirstOrDefaultAsync(m => m.MenuId == Menu.MenuId);
 
+            _context.Menus.Remove(menu);
+
             menu.Name = Menu.Name;
+            menu.Foods = new List<Food>();
 
-            if(menu.Foods == null)
+            foreach (var foodid in FoodIds)
             {
-                menu.Foods = new List<Food>();
-                foreach (var foodid in FoodIds)
+                foreach (var food in Foods1)
                 {
-                    foreach (var food in Foods1)
+                    if (food.FoodId == foodid)
                     {
-                        if (food.FoodId == foodid)
-                        {
-                            menu.Foods.Add(food);
-                        }
-                        else
-                        {
-                            menu.Foods.Remove(food);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                foreach (var foodid in FoodIds)
-                {
-                    foreach (var food in Foods1)
-                    {
-                        if (food.FoodId == foodid)
-                        {
-                            menu.Foods.Add(food);
-                        }
-                        else
-                        {
-                            menu.Foods.Remove(food);
-                        }
+                        menu.Foods.Add(food);
                     }
                 }
             }
 
-            _context.Menus.Attach(menu).State = EntityState.Modified;
+            Menu = new Menu { Name = menu.Name, User = menu.User, UserId = menu.UserId, Foods = menu.Foods};
+
+            _context.Menus.Add(Menu);
 
             try
             {

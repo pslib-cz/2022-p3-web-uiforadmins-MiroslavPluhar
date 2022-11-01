@@ -1,0 +1,68 @@
+﻿@page
+@model Jídelníček.Pages.FoodModel
+@{
+}
+
+<h1>Foods</h1>
+
+@if (Model.Alert != null)
+{
+    <div class="alert alert-success" role="alert">@Model.Alert</div>
+}
+
+<p>
+    <a asp-page="./Index">Return to users</a>
+</p>
+
+<p>
+    <a asp-page="./CreateFood">Create new food</a>
+</p>
+
+<form asp-page="./Food" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find Food by Name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Food">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].FoodId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Food[0].Kind)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Food)
+        {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.FoodId)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Kind)
+                    </td>
+                    <td>
+                        <a asp-page="./EditFood" asp-route-id="@item.FoodId">Edit</a> |
+                        <a asp-page="./DetailsFood" asp-route-id="@item.FoodId">Details</a> |
+                        <a asp-page="./DeleteFood" asp-route-id="@item.FoodId">Delete</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

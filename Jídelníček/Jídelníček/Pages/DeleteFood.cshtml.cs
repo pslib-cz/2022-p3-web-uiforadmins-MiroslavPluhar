@@ -63,7 +63,7 @@ namespace Jídelníček.Pages
 
             Alert = "Položka byla úspěšně odstraněna!";
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Food");
         }
     }
 }
