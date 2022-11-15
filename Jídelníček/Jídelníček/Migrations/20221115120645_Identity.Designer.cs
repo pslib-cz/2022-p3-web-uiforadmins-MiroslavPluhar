@@ -4,6 +4,7 @@ using Jídelníček.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Jídelníček.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221115120645_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,19 +192,14 @@ namespace Jídelníček.Migrations
                         {
                             UserId = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1aebc147-7657-420e-bf46-8ea507c2bfea",
-                            Email = "miroslav.pluhar.020@pslib.cz",
-                            EmailConfirmed = true,
+                            ConcurrencyStamp = "877b66eb-6a74-4473-97a3-a412ec5c7370",
+                            EmailConfirmed = false,
                             FirstName = "Miroslav",
                             Id = 0,
                             LastName = "Pluhař",
                             LockoutEnabled = false,
-                            NormalizedEmail = "MIROSLAV.PLUHAR.020@PSLIB.CZ",
-                            NormalizedUserName = "MIROSLAV.PLUHAR.020@PSLIB.CZ",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHytuZhEqfOwtWV8QMbNdHNtLbuVNEiFyefGCuIt3MJnfzgOr+YrQjUfSKX7kttLnA==",
                             PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "miroslav.pluhar.020@pslib.cz"
+                            TwoFactorEnabled = false
                         });
                 });
 
